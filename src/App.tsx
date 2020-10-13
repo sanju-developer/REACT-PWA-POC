@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import Routing from "src/Routes";
+import { initIndexDb } from "src/indexDb";
+
+import "./App.css";
 
 function App() {
+  useEffect(() => {
+    initIndexDb();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routing />
+      <footer>
+        <u>
+          <b>Developed by Vivek Rajoriya, 2020</b>
+        </u>
+      </footer>
     </div>
   );
 }
