@@ -16,22 +16,24 @@ function List(props: any) {
           <React.Fragment key={post.id}>
             <ListGroup.Item
               variant="info"
-              className="d-flex justify-content-center align-items-center"
+              className="d-flex justify-content-center align-items-center flex-wrap"
             >
               <p className="mr-2">{post.id}</p>
               {post.body}
-              <Button
-                variant="outline-danger ml-2 mr-2"
-                onClick={() => deleteBtnHandler(post.id)}
-              >
-                Delete
-              </Button>
-              <Button
-                variant="outline-info ml-2 mr-2"
-                onClick={() => history.push(`post/${post.id}/comments`)}
-              >
-                Comments
-              </Button>
+              <div>
+                <Button
+                  variant="outline-danger m-2 m-2"
+                  onClick={() => deleteBtnHandler(post.id)}
+                >
+                  Delete
+                </Button>
+                <Button
+                  variant="outline-info m-2 m-2"
+                  onClick={() => history.push(`post/${post.id}/comments`)}
+                >
+                  Comments
+                </Button>
+              </div>
             </ListGroup.Item>
           </React.Fragment>
         ))}

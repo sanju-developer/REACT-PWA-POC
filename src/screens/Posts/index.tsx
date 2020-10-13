@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner, Button, Tabs, Tab, Alert } from "react-bootstrap";
+import {
+  Container,
+  Spinner,
+  Button,
+  Tabs,
+  Tab,
+  Alert,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 
 import {
   setNewlyAddedPostInDb,
   setDeletingPostIdInDb,
   setPostListInDb,
-  getPostsFromInDb
+  getPostsFromInDb,
 } from "src/indexDb";
 import AddPost from "src/components/AddPost";
 import List from "src/components/List";
@@ -21,7 +31,7 @@ function Posts() {
   const [postForm, setPostForm] = useState({
     title: "vivek",
     body: "rajoriya",
-    userId: 777
+    userId: 777,
   });
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [key, setKey] = useState<string | null>("about");
@@ -32,9 +42,10 @@ function Posts() {
 
   const makeGetPostApiCall = () => {
     getPostsList()
-      .then(res => {
+      .then((res) => {
         setMode(false);
-        setPostList(res);
+        const AsPerRes = res.slice(0, 20);
+        setPostList(AsPerRes);
         setPostListInDb("posts", res);
       })
       .catch(async () => {
@@ -48,15 +59,15 @@ function Posts() {
 
   const onchangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { name, value }
+      target: { name, value },
     } = e;
-    setPostForm(prev => ({ ...prev, [name]: value } as any));
+    setPostForm((prev) => ({ ...prev, [name]: value } as any));
   };
 
   const addPostBtnHandler = () => {
     setShowLoader(true);
     if (navigator.onLine) {
-      createPosts(postForm).then(res => {
+      createPosts(postForm).then((res) => {
         const copyPostList = [...postList];
         copyPostList.unshift(res);
         setPostList(copyPostList);
@@ -77,7 +88,7 @@ function Posts() {
     setShowLoader(true);
     if (navigator.onLine) {
       deletePost(postId).then(() => {
-        const updatedPostList = postList.filter(item => item.id !== postId);
+        const updatedPostList = postList.filter((item) => item.id !== postId);
         setPostList(updatedPostList);
         setShowLoader(false);
       });
@@ -102,7 +113,7 @@ function Posts() {
           Your are under offline mode!
         </Alert>
       )}
-      <div className="d-flex justify-content-between align-items-center p-3">
+      <div className="d-flex justify-content-center align-items-center p-3">
         {showLoader && !isAddPostBtnClicked ? (
           <span>
             <span className="pr-2">Deleting post...</span>
@@ -111,34 +122,34 @@ function Posts() {
         ) : (
           <div />
         )}
-        <h1 className="mt-4 mb-4">React-Pwa-Poc</h1>
-        <Button variant="outline-dark">Hope, You liked it</Button>
+        <h1 className="mt-4 mb-4">
+          React-Pwa-Poc
+          <div style={{ fontSize: 14 }}>Hope, You liked it</div>
+        </h1>
       </div>
       <Container fluid>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={k => setKey(k)}
+          onSelect={(k) => setKey(k)}
         >
           <Tab eventKey="about" title="About">
-            <p className="w-75 m-auto pt-3 pb-3 text-center">
+            <p className="w-75 m-auto pt-3 pb-4 text-center">
               A progressive web application is a type of application software
               delivered through the web, built using common web technologies
               including HTML, CSS and JavaScript. It is intended to work on any
               platform that uses a standards-compliant browser, including both
               desktop and mobile devices
             </p>
-            <img
-              className="p-4"
-              alt="pwa"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Progressive_Web_Apps_Logo.svg/1200px-Progressive_Web_Apps_Logo.svg.png"
-              style={{ width: 500, height: 200 }}
+            <Image
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Progressive_Web_Apps_Logo.svg/400px-Progressive_Web_Apps_Logo.svg.png"
+              fluid
             />
           </Tab>
           <Tab
             eventKey="list"
             title="list"
-            className="d-flex justify-content-around align-items-start mt-3 mb-2"
+            className="d-flex justify-content-around align-items-start mt-3 mb-2 flex-wrap"
           >
             {isAddPostBtnClicked ? (
               <AddPost
@@ -152,6 +163,7 @@ function Posts() {
               <>
                 <List postList={postList} deleteBtnHandler={deleteBtnHandler} />
                 <Button
+                  className="mt-3"
                   variant="success"
                   onClick={() => setAddPostButtonClicked(!isAddPostBtnClicked)}
                 >
