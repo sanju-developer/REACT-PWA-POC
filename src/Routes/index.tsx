@@ -8,10 +8,10 @@ function Routing() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact={true} strict={true}>
+        <Route path="/" exact>
           <Posts />
         </Route>
-        <Route path="/post/:id/comments">
+        <Route path="/post/:id/comments" exact strict>
           <SinglePost />
         </Route>
       </Switch>

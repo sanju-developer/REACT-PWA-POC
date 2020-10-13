@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { HashRouter } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Routing from "src/Routes";
@@ -12,6 +13,7 @@ function App() {
   }, []);
 
   return (
+    <HashRouter basename="/">
     <div className="App">
       <Routing />
       <footer>
@@ -20,6 +22,7 @@ function App() {
         </u>
       </footer>
     </div>
+    </HashRouter>
   );
 }
 
