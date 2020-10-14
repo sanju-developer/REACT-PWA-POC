@@ -12,6 +12,12 @@ function AddPost(props: any) {
 
   return (
     <div className="form-container">
+      {showLoader && (
+        <>
+          <p>Posting post</p>
+          <Spinner animation="grow" />
+        </>
+      )}
       <Form className="w-100 d-flex flex-wrap">
         <Form.Group
           controlId="formBasicTitle"
@@ -75,13 +81,6 @@ function AddPost(props: any) {
           </Button>
         </div>
       </Form>
-
-      {showLoader && (
-        <>
-          <p>Posting post</p>
-          <Spinner animation="grow" />
-        </>
-      )}
     </div>
   );
 }

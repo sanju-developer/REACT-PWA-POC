@@ -11,9 +11,10 @@ this.addEventListener("install", function (event) {
         "/static/js/bundle.js",
         "/static/js/main.chunk.js",
         "static/js/0.chunk.js",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Progressive_Web_Apps_Logo.svg/400px-Progressive_Web_Apps_Logo.svg.png",
         "/posts",
         "/offline.html",
-        "/"
+        "/",
       ]);
     })
   );
@@ -21,15 +22,27 @@ this.addEventListener("install", function (event) {
 
 this.addEventListener("fetch", function (event) {
   // From cache when no internet connection
-  if (!navigator.onLine) {
+  if (!navigator.onLine)
     event.respondWith(
       caches.open(cacheName).then(function (cache) {
         return cache.match(event.request).then(function (response) {
-          if (response) return response;
+          return (
+            response ||
+            fetch(event.request)
+              .then(function (response) {
+                cache.put(event.request, response.clone());
+                return response;
+              })
+              .catch(() => {
+                if (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html')) {
+                  // Return the offline page
+                  return caches.match('offline.html');
+              }
+            })
+          );
         });
       })
     );
-  }
 });
 
 // cache api call
@@ -45,13 +58,13 @@ this.addEventListener("sync", function (event) {
 async function addPost(addedItem) {
   return fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
-    body: JSON.stringify(addedItem)
+    body: JSON.stringify(addedItem),
   });
 }
 
 async function deletePost(postId) {
   return fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 }
 

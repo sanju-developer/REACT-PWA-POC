@@ -7,7 +7,7 @@ import { PostListInterface } from "src/interfaces/PostListInterface";
 function List(props: any) {
   const { postList, deleteBtnHandler, history } = props;
   return (
-    <ListGroup className="w-75 d-inline-flex">
+    <ListGroup className="d-inline-flex">
       <ListGroup.Item>
         Your Posts&nbsp;<b>{postList.length}</b>
       </ListGroup.Item>
@@ -16,9 +16,9 @@ function List(props: any) {
           <React.Fragment key={post.id}>
             <ListGroup.Item
               variant="info"
-              className="d-flex justify-content-center align-items-center flex-wrap"
+              className="mb-2"
             >
-              <p className="mr-2">{post.id}</p>
+              <p className="mr-2 mb-0">{post.id}</p>
               {post.body}
               <div>
                 <Button
@@ -30,6 +30,7 @@ function List(props: any) {
                 <Button
                   variant="outline-info m-2 m-2"
                   onClick={() => history.push(`post/${post.id}/comments`)}
+                  disabled={!navigator.onLine}
                 >
                   Comments
                 </Button>

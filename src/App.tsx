@@ -1,19 +1,30 @@
 import React, { useEffect } from "react";
-import { HashRouter } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Routing from "src/Routes";
 import { initIndexDb } from "src/indexDb";
+import firebase from "./firebase";
 
 import "./App.css";
 
 function App() {
   useEffect(() => {
+    // initiallization of index DB
     initIndexDb();
+    // setup for firebase push notification
+    const msg = firebase.messaging();
+    Notification.requestPermission(function (status) {
+      console.log("Notification permission status:", status);
+      if (status === "granted") {
+        msg
+          .getToken()
+          .then((token) => console.log("$$$$$ ft $$$$$", token))
+          .catch((err) => console.log("error while asking fo FCM token", err));
+      } else console.log("permission not granted", status);
+    });
   }, []);
 
   return (
-    <HashRouter basename="/">
     <div className="App">
       <Routing />
       <footer>
@@ -22,7 +33,6 @@ function App() {
         </u>
       </footer>
     </div>
-    </HashRouter>
   );
 }
 
