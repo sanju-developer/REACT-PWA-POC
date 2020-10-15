@@ -11,14 +11,14 @@ function AddPost(props: any) {
   } = props;
 
   return (
-    <div className="form-container">
+    <div className="form-container mt-3">
       {showLoader && (
         <>
           <p>Posting post</p>
           <Spinner animation="grow" />
         </>
       )}
-      <Form className="w-100 d-flex flex-wrap">
+      <Form className="w-100 d-flex flex-wrap pb-4">
         <Form.Group
           controlId="formBasicTitle"
           className="w-100 justify-content-start"

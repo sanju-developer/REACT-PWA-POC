@@ -7,17 +7,14 @@ import { PostListInterface } from "src/interfaces/PostListInterface";
 function List(props: any) {
   const { postList, deleteBtnHandler, history } = props;
   return (
-    <ListGroup className="d-inline-flex">
+    <ListGroup className="d-inline-flex mt-3">
       <ListGroup.Item>
         Your Posts&nbsp;<b>{postList.length}</b>
       </ListGroup.Item>
       {postList &&
         postList.map((post: PostListInterface) => (
           <React.Fragment key={post.id}>
-            <ListGroup.Item
-              variant="info"
-              className="mb-2"
-            >
+            <ListGroup.Item variant="info" className="mb-2">
               <p className="mr-2 mb-0">{post.id}</p>
               {post.body}
               <div>

@@ -18,8 +18,8 @@ function App() {
       if (status === "granted") {
         msg
           .getToken()
-          .then((token) => console.log("$$$$$ ft $$$$$", token))
-          .catch((err) => console.log("error while asking fo FCM token", err));
+          .then((token: string) => console.log("$$$$$ ft $$$$$", token))
+          .catch(err => console.log("error while asking fo FCM token", err));
       } else console.log("permission not granted", status);
     });
   }, []);
