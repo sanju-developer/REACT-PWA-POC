@@ -12,16 +12,22 @@ function App() {
     // initiallization of index DB
     initIndexDb();
     // setup for firebase push notification
-    const msg = firebase.messaging();
-    Notification.requestPermission(function (status) {
-      console.log("Notification permission status:", status);
-      if (status === "granted") {
-        msg
-          .getToken()
-          .then((token: string) => console.log("$$$$$ ft $$$$$", token))
-          .catch(err => console.log("error while asking fo FCM token", err));
-      } else console.log("permission not granted", status);
-    });
+    console.log(
+      firebase.messaging.isSupported(),
+      "firebase.messaging.isSupported()"
+    );
+    if (firebase.messaging.isSupported()) {
+      const msg = firebase.messaging();
+      Notification.requestPermission(function (status) {
+        console.log("Notification permission status:", status);
+        if (status === "granted") {
+          msg
+            .getToken()
+            .then((token: string) => console.log("$$$$$ ft $$$$$", token))
+            .catch(err => console.log("error while asking fo FCM token", err));
+        } else console.log("permission not granted", status);
+      });
+    }
   }, []);
 
   return (
